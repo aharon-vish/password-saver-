@@ -7,7 +7,19 @@ import {View,
 import { Button,FormLabel,FormInput,FormValidationMessage } from 'react-native-elements';
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.state = {userName: '', password: ''};
+    }
+
     componentWillMount() {
+
+    }
+
+    onSubmit(e) {
+        console.log(this.state.userName, this.state.password);
     }
 
     render() {
@@ -15,13 +27,17 @@ class App extends Component {
             <View style={styles.entryStyle}>
                 <FormLabel>User Name</FormLabel>
                 <FormInput
+                    inputStyle={{textAlign:'center'}}
                     placeholder={`your@mail.com`}
+                    onChangeText={value => this.setState({userName:value})}
                 />
                 <FormValidationMessage>{}</FormValidationMessage>
                 <FormLabel>Password</FormLabel>
                 <FormInput
                     placeholder={`password`}
+                    inputStyle={{textAlign:'center'}}
                     secureTextEntry
+                    onChangeText={value => this.setState({password:value})}
                 />
                 <FormValidationMessage>{}</FormValidationMessage>
                 <Button
@@ -29,7 +45,8 @@ class App extends Component {
                     buttonStyle={{width:'100%',marginTop:60}}
                     fontSize={20}
                     fontWeight={`200`}
-                    backgroundColor={`#a301bc`}/>
+                    backgroundColor={`#a301bc`}
+                    onPress={this.onSubmit}/>
             </View>
         );
     }
@@ -37,30 +54,13 @@ class App extends Component {
 
 const styles = StyleSheet.create({
     entryStyle: {
-        display:'flex',
-        flex:1,
-        marginTop: 20,
-        width:'100%',
+        display: 'flex',
+        flex: 1,
+        marginTop: 60,
+        width: '100%',
         height: '20%',
         flexDirection: 'column',
-        alignItems: 'center',
-    },
-    // inputStyle: {
-    //     color: '#000',
-    //     paddingRight: 5,
-    //     paddingLeft: 5,
-    //     fontSize: 18,
-    //     lineHeight: 23,
-    //     height: 40,
-    //     borderColor: 'gray',
-    //     borderWidth: 1
-    // },
-    // buttonStyle:{
-    //     height: 40,
-    //     width:'100%',
-    //     borderColor: 'gray',
-    //     borderWidth: 1,
-    //    textAlign:'center'
-    // },
+        alignItems: 'center'
+    }
 });
 export default App;
