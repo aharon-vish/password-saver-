@@ -1,4 +1,9 @@
 import React, {Component} from 'react';
+import {connect,Provider} from 'react-redux';
+import {createStore , applyMiddleware} from 'redux';
+import  ReduxThunk from 'redux-thunk';
+import reducers from './reducers';
+import LoginForm from './components/LoginForm';
 import {View,
     StyleSheet,
     TextInput,
@@ -10,44 +15,19 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.state = {userName: '', password: ''};
     }
 
     componentWillMount() {
 
     }
 
-    onSubmit(e) {
-        console.log(this.state.userName, this.state.password);
-    }
-
     render() {
+        const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
         return (
-            <View style={styles.entryStyle}>
-                <FormLabel>User Name</FormLabel>
-                <FormInput
-                    inputStyle={{textAlign:'center'}}
-                    placeholder={`your@mail.com`}
-                    onChangeText={value => this.setState({userName:value})}
-                />
-                <FormValidationMessage>{}</FormValidationMessage>
-                <FormLabel>Password</FormLabel>
-                <FormInput
-                    placeholder={`password`}
-                    inputStyle={{textAlign:'center'}}
-                    secureTextEntry
-                    onChangeText={value => this.setState({password:value})}
-                />
-                <FormValidationMessage>{}</FormValidationMessage>
-                <Button
-                    title={`registration`}
-                    buttonStyle={{width:'100%',marginTop:60}}
-                    fontSize={20}
-                    fontWeight={`200`}
-                    backgroundColor={`#a301bc`}
-                    onPress={this.onSubmit}/>
-            </View>
+            <Provider store={store}>
+                <LoginForm/>
+            </Provider>
         );
     }
 }
@@ -63,4 +43,5 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
 export default App;
