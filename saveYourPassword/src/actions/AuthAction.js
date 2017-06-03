@@ -1,19 +1,18 @@
-import {LOGIN_USER} from '../types';
+import {LOGIN_USER,LOGIN_USER_FAIL} from '../types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 
 export const loginUser = ({email, password})=> {
-
+    debugger;
     return (dispatch)=> {
-        dispatch({type:LOGIN_USER});
+        dispatch({type: LOGIN_USER});
         firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(user=>console.log(user))
+            .catch(()=>loginUserFail(dispatch));
     };
 };
-
-const loginUserSuccess = (dispatch, user)=> {
+const loginUserFail = (dispatch)=> {
     dispatch({
-        type: LOGIN_USER_SUCCESS,
-        payload: user
+        type: LOGIN_USER_FAIL
     });
-    Actions.main();
 };

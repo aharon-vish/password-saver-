@@ -1,24 +1,15 @@
 import React, {Component} from 'react';
-import {connect,Provider} from 'react-redux';
+import  {StyleSheet} from 'react-native';
+import {Provider} from 'react-redux';
 import {createStore , applyMiddleware} from 'redux';
 import  ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import LoginForm from './components/LoginForm';
-import {View,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    Text}  from 'react-native';
-import { Button,FormLabel,FormInput,FormValidationMessage } from 'react-native-elements';
 
 class App extends Component {
 
     constructor(props) {
         super(props);
-    }
-
-    componentWillMount() {
-
     }
 
     render() {
