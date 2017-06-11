@@ -1,12 +1,17 @@
 import React from 'react';
 import {View} from 'react-native';
 import {FormLabel, FormInput,Button,FormValidationMessage} from 'react-native-elements';
-const Form = ({form}) => {
-    let errorMsg = 'lolo';
-    const {fieldInputChange} = form;
+import validate from 'validate.js';
+import validationRules from '../../formRules';
+
+const Form = ({form,error,onChangeText,onBlur}) => {
+    const {errorMsg} = form;
     const{formFields,formStyle} = form.form;
     const onSubmit = (key,koko) =>{
         this.errorMsg='pop';
+    };
+    const pop = (_key,_value) =>{
+      console.log(_key,_value,'dsd');
     };
     return (
         <View style={formStyle}>
@@ -16,11 +21,12 @@ const Form = ({form}) => {
                     <FormInput placeholder={field.input.placeholder}
                                secureTextEntry={field.input.secureTextEntry}
                                inputStyle={field.input.inputStyle}
-                               onChangeText={fieldInputChange.bind(this,field.key)}
-                               key={field.key}/>
+                               onChangeText={onChangeText}
+                               key={field.key}
+                               onBlur={onBlur}/>
+                    <FormValidationMessage>{error}</FormValidationMessage>
                 </View>
             ))}
-            <FormValidationMessage>{errorMsg}</FormValidationMessage>
             <Button
                 title={`Log In`}
                 buttonStyle={{width: '100%', marginTop: 60}}

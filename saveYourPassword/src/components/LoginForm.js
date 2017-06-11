@@ -18,7 +18,10 @@ class LoginForm extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.changeToRegistrationForm = this.changeToRegistrationForm.bind(this);
         this.fieldInputChange = this.fieldInputChange.bind(this);
-        this.state = {key: '', email: 'lolo', password: '', errorEmail: '', errorPassword: ''};
+        this.state = {key: '', email: '', password: '', errorEmail: '', errorPassword: ''};
+        //const result = validate({email: 'dsfdsf@.com', password: ''}, validationRules);
+       // console.log(result);
+
     }
 
     onSubmit() {
@@ -74,10 +77,10 @@ class LoginForm extends Component {
     }
 
     fieldInputChange(key, value) {
-        console.log(typeof key, value);
+        console.log( key, value);
         switch (key) {
             case 'email':
-                this.setState({email: value});
+                this.setState({email: value, errorEmail: value});
                 return;
             case 'password':
                 this.setState({password: value});
@@ -86,15 +89,19 @@ class LoginForm extends Component {
                 return console.log('no type');
         }
     }
+
     render() {
         return (
             <View style={styles.entryStyle}>
-                <Form form={{
-                    form,
-                    fieldInputChange: this.fieldInputChange,
-                    errorMsg:this.state.error}}/>
-                <Text>email:{this.state.email}</Text>
-                <Text>password:{this.state.password}</Text>
+                <Form
+                    form={{
+                        form,
+                        errorMsg: this.state.errorEmail,
+                    }}
+                    onChangeText={value => this.setState({value: value.trim()})}
+                    value={this.state.value}
+                    error={this.state.value}
+                />
             </View>
         );
     }
