@@ -1,114 +1,49 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Actions} from 'react-native-router-flux';
 import {loginUser} from '../actions';
 import {Form} from './common';
-import {
-    View,
-    StyleSheet,
-    TouchableOpacity,
-    Text
-}  from 'react-native';
+import {View,Text}  from 'react-native';
 import {Button} from 'react-native-elements';
-import validator from 'validator';
+import validate from 'validate.js';
+import validationRules from '../formRules';
 
 class LoginForm extends Component {
     constructor(props) {
         super(props);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.changeToRegistrationForm = this.changeToRegistrationForm.bind(this);
-        this.fieldInputChange = this.fieldInputChange.bind(this);
-        this.state = {key: '', email: '', password: '', errorEmail: '', errorPassword: ''};
-        //const result = validate({email: 'dsfdsf@.com', password: ''}, validationRules);
-       // console.log(result);
-
+        this.state = {email: '', password: ''};
+        this.setState({email:'hkfjhfhj'});
     }
 
-    onSubmit() {
-        let {email, password} = this.state;
-        email = validator.trim(email);
-        password = validator.trim(password);
-
-        let validFormEmail = false;
-        let validFormPassword = false;
-
-        if (validator.isEmpty(email)) {
-            this.setState({errorEmail: 'Email is required.'});
-            validFormEmail = false;
-        } else {
-            this.setState({errorEmail: ''});
-            validFormEmail = true;
-        }
-        if (!validator.isEmail(email)) {
-            this.setState({errorEmail: 'Email is required.'});
-            validFormEmail = false;
-        } else {
-            this.setState({errorEmail: ''});
-            validFormEmail = true;
-        }
-        if (validator.isEmpty(password)) {
-            this.setState({errorPassword: 'Password is required.'});
-            validFormPassword = false;
-        } else {
-            this.setState({errorPassword: ''});
-            validFormPassword = true;
-        }
-        validFormPassword && validFormEmail && this.props.loginUser({email, password});
+    renderLoginForm() {
+        return formFields.map((field)=> {
+                return ( <Form
+                        key={field.key}
+                        label={field.label}
+                        placeholder={field.input.placeholder}
+                        onChangeText={value => (this.setState({[field.key]:value}))}
+                        errorMsg={this.state[field.key]}/>
+                )
+            }
+        )
     }
 
-    changeToRegistrationForm() {
+    render() {
         return (
             <View>
+                {this.renderLoginForm()}
                 <Button
                     title={`Log In`}
                     buttonStyle={{width: '100%', marginTop: 60}}
                     fontSize={20}
                     fontWeight={`200`}
-                    backgroundColor={`#a301bc`}
-                    onPress={this.onSubmit}/>
-                <TouchableOpacity>
-                    <Text
-                        style={styles.singUpBtnStyle}
-                        /*onPress={()=>{Actions.registration()}}*/
-                        onPress={this.changeToRegistrationForm}
-                    >Sing Up</Text>
-                </TouchableOpacity>
-            </View>);
-    }
-
-    fieldInputChange(key, value) {
-        console.log( key, value);
-        switch (key) {
-            case 'email':
-                this.setState({email: value, errorEmail: value});
-                return;
-            case 'password':
-                this.setState({password: value});
-                return;
-            default:
-                return console.log('no type');
-        }
-    }
-
-    render() {
-        return (
-            <View style={styles.entryStyle}>
-                <Form
-                    form={{
-                        form,
-                        errorMsg: this.state.errorEmail,
-                    }}
-                    onChangeText={value => this.setState({value: value.trim()})}
-                    value={this.state.value}
-                    error={this.state.value}
-                />
+                    backgroundColor={`#a301bc`}/>
             </View>
         );
     }
 }
 const formFields = [{
     key: 'email',
-    labael: 'User Name',
+    label: 'User Name',
     input: {
         placeholder: 'your@mail.com',
         inputStyle: {textAlign: 'center'}
@@ -116,25 +51,13 @@ const formFields = [{
 },
     {
         key: 'password',
-        labael: 'Password',
+        label: 'Password',
         input: {
             placeholder: 'Password',
             secureTextEntry: true,
             inputStyle: {textAlign: 'center'}
         }
     }];
-const formStyle = {alignItems: 'center'};
-const form = {
-    formFields: formFields,
-    formStyle: formStyle
-};
-const styles = StyleSheet.create({
-    singUpBtnStyle: {
-        marginTop: 40,
-        textDecorationLine: 'underline',
-        textAlign: 'center'
-    }
-});
 
 const mapStateToProps = ({auth}) => {
     const {email, password, error, loading} = auth;
