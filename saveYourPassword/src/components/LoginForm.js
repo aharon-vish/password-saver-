@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loginUser} from '../actions';
-import {Form} from './common';
+import {Form,ValidateInput} from './common';
 import {View,Text}  from 'react-native';
 import {Button} from 'react-native-elements';
 import validate from 'validate.js';
@@ -10,18 +10,34 @@ import validationRules from '../formRules';
 class LoginForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {email: '', password: ''};
-        this.setState({email:'hkfjhfhj'});
+        this.state = {email: '', password: '', emailError: ''};
     }
 
+    test(fieldName){
+        let errorMsg = validate({[fieldName]:this.state[fieldName]},validationRules);
+        if(errorMsg[fieldName] && errorMsg[fieldName][0]){
+            this.setState({
+                [`${fieldName}Error`]:errorMsg[fieldName][0]
+            });
+        }else {
+            this.setState({
+                [`${fieldName}Error`]:''
+            });
+        }
+    }
     renderLoginForm() {
         return formFields.map((field)=> {
-                return ( <Form
-                        key={field.key}
-                        label={field.label}
-                        placeholder={field.input.placeholder}
-                        onChangeText={value => (this.setState({[field.key]:value}))}
-                        errorMsg={this.state[field.key]}/>
+                return (
+                    <View key={field.key} style={{display: 'flex',textAlign :'center',justifyContent:'center',backgroundColor: 'yellow',borderStyle: 'dotted'}}>
+                        <Form
+                            label={field.label}
+                            placeholder={field.input.placeholder}
+                            onBlur={fieldName => this.test(fieldName)}
+                            fieldName={field.key}
+                            onChangeText={value => (this.setState({[field.key]:value.trim()}))}
+                            input={field.input}/>
+                        <ValidateInput errorMsg={this.state[field.input.error]}/>
+                    </View>
                 )
             }
         )
@@ -46,7 +62,8 @@ const formFields = [{
     label: 'User Name',
     input: {
         placeholder: 'your@mail.com',
-        inputStyle: {textAlign: 'center'}
+        inputStyle: {textAlign: 'center'},
+        error: 'emailError'
     }
 },
     {
@@ -55,7 +72,8 @@ const formFields = [{
         input: {
             placeholder: 'Password',
             secureTextEntry: true,
-            inputStyle: {textAlign: 'center'}
+            inputStyle: {textAlign: 'center'},
+            error: 'passwordError'
         }
     }];
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import {View} from 'react-native';
-import {FormLabel, FormInput,Button,FormValidationMessage} from 'react-native-elements';
+import validate from 'validate.js';
+import validationRules from '../../formRules';
+import {FormValidationMessage} from 'react-native-elements';
 
 const ValidateInput = ({errorMsg}) => {
     return (<FormValidationMessage>{errorMsg}</FormValidationMessage>)
