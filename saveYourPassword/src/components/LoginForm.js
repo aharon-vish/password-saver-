@@ -1,40 +1,47 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loginUser} from '../actions';
-import {Form,ValidateInput} from './common';
-import {View,Text}  from 'react-native';
+import {Form, ValidateInput} from './common';
+import {View, Text, TextInput, TouchableOpacity}  from 'react-native';
 import {Button} from 'react-native-elements';
 import validate from 'validate.js';
+import {Actions} from 'react-native-router-flux';
 import validationRules from '../formRules';
 
 class LoginForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {email: '', password: '', emailError: ''};
+        this.state = {email: '', password: ''};
+        this.submit = this.submit.bind(this);
     }
 
-    test(fieldName){
-        let errorMsg = validate({[fieldName]:this.state[fieldName]},validationRules);
-        if(errorMsg[fieldName] && errorMsg[fieldName][0]){
+    checkValid(fieldName) {
+        let errorMsg = validate({[fieldName]: this.state[fieldName]}, validationRules);
+        if (errorMsg[fieldName] && errorMsg[fieldName][0]) {
             this.setState({
-                [`${fieldName}Error`]:errorMsg[fieldName][0]
+                [`${fieldName}Error`]: errorMsg[fieldName][0]
             });
-        }else {
+            return false;
+        } else {
             this.setState({
-                [`${fieldName}Error`]:''
+                [`${fieldName}Error`]: ''
             });
+            return true;
         }
     }
+
     renderLoginForm() {
         return formFields.map((field)=> {
                 return (
-                    <View key={field.key} style={{display: 'flex',textAlign :'center',justifyContent:'center',backgroundColor: 'yellow',borderStyle: 'dotted'}}>
+                    <View key={field.key}>
                         <Form
                             label={field.label}
                             placeholder={field.input.placeholder}
-                            onBlur={fieldName => this.test(fieldName)}
+                            onBlur={fieldName => this.checkValid(fieldName)}
                             fieldName={field.key}
-                            onChangeText={value => (this.setState({[field.key]:value.trim()}))}
+                            onChangeText={value => (this.setState({[field.key]: value.trim()}))}
+                            styleLabel={{textAlign: 'center'}}
+                            styleInput={{textAlign: 'center', width: '100%'}}
                             input={field.input}/>
                         <ValidateInput errorMsg={this.state[field.input.error]}/>
                     </View>
@@ -43,16 +50,41 @@ class LoginForm extends Component {
         )
     }
 
+    submit() {
+        let isFormValid;
+        formFields.map((field) => {
+            isFormValid = this.checkValid(field.key);
+        });
+        if (isFormValid) {
+            this.props.loginUser(this.state.email, this.state.password);
+        } else {
+            return false;
+        }
+    }
+
     render() {
         return (
             <View>
                 {this.renderLoginForm()}
                 <Button
+                    onPress={this.submit}
                     title={`Log In`}
-                    buttonStyle={{width: '100%', marginTop: 60}}
+                    buttonStyle={{width: '100%', height: 60}}
                     fontSize={20}
                     fontWeight={`200`}
                     backgroundColor={`#a301bc`}/>
+                <TouchableOpacity
+                    onPress={Actions.registration}
+                    style={{marginTop: 15}}>
+                    <Text
+                        style={{
+                            textDecorationLine: 'underline',
+                            textAlign: 'center',
+                            color: '#4286f4'
+                        }}>
+                        {`Sing In`}
+                    </Text>
+                </TouchableOpacity>
             </View>
         );
     }

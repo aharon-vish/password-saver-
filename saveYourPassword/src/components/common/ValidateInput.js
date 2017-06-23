@@ -5,6 +5,6 @@ import validationRules from '../../formRules';
 import {FormValidationMessage} from 'react-native-elements';
 
 const ValidateInput = ({errorMsg}) => {
-    return (<FormValidationMessage>{errorMsg}</FormValidationMessage>)
+    return (<FormValidationMessage labelStyle={{marginBottom:30}}>{errorMsg}</FormValidationMessage>)
 };
 export {ValidateInput}
