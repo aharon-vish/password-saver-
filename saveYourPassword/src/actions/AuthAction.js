@@ -1,31 +1,39 @@
-import {LOGIN_USER,LOGIN_USER_FAIL,REGISTRATION_USER} from '../types';
+import {LOGIN_USER, LOGIN_USER_FAIL, REGISTRATION_USER} from '../types';
 import firebase from 'firebase';
-import {View, Text, TextInput,Alert}  from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import {View, Text, TextInput, Alert}  from 'react-native';
+import {Actions} from 'react-native-router-flux';
 
 export const loginUser = (email, password)=> {
     return (dispatch)=> {
         dispatch({type: LOGIN_USER});
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user=>console.log(user))
-            .catch((user)=>{
+            .catch((user)=> {
                 Alert.alert(
                     'Login Failed',
                     user.message,
                     [
-                        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                        {text: 'Cancel', style: 'cancel'},
                     ],
-                    { cancelable: false }
+                    {cancelable: false}
                 )
             });
     };
 };
-export const registrationUser = (email, password)=>{
+export const registrationUser = (email, password)=> {
     return (dispatch)=> {
         dispatch({type: REGISTRATION_USER});
         firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(user=>console.log(user))
-            .catch((user)=>console.log(user));
+            .then(Actions.home)
+            .catch((user)=>
+                Alert.alert(
+                    'Login Failed',
+                    user.message,
+                    [
+                        {text: 'Cancel', style: 'cancel'},
+                    ],
+                    {cancelable: false}
+                ));
     }
 };
 const loginUserFail = (dispatch)=> {
