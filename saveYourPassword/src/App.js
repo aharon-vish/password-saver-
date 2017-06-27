@@ -35,3 +35,6 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+//TODO * continue with the newpassword component
+//TODO * add HOC auth
