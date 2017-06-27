@@ -42,6 +42,7 @@ class LoginForm extends Component {
                             onChangeText={value => (this.setState({[field.key]: value.trim()}))}
                             styleLabel={{textAlign: 'center'}}
                             styleInput={{textAlign: 'center', width: '100%'}}
+                            secureTextEntry = {field.input.secureTextEntry}
                             input={field.input}/>
                         <ValidateInput errorMsg={this.state[field.input.error]}/>
                     </View>

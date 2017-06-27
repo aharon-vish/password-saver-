@@ -3,6 +3,7 @@ import {Scene, Router} from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import RegistrationForm from './components/RegistrationForm';
 import Home from './components/Home';
+import NewPasswordForm from './components/NewPasswordForm';
 
 const RouterComponent = ()=> {
     return (
@@ -13,7 +14,8 @@ const RouterComponent = ()=> {
                        backTitle="Log In"
                        title="Registrar"/>
             </Scene>
-            <Scene key="home" component={Home}/>
+            <Scene key="home" renderBackButton={()=>(null)} component={Home}/>
+            <Scene key="newPasswordForm" component={NewPasswordForm}/>
         </Router>
     );
 };
