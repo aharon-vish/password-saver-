@@ -36,5 +36,5 @@ const styles = StyleSheet.create({
 
 export default App;
 
-//TODO * continue with the newpassword component
+//TODO * continue with the redux and add to firebase the data
 //TODO * add HOC auth

@@ -6,7 +6,7 @@ import {View, Text, TextInput, TouchableOpacity}  from 'react-native';
 import {Button} from 'react-native-elements';
 import validate from 'validate.js';
 import {Actions} from 'react-native-router-flux';
-import validationRules from '../formRules';
+import {validationAuthRules}from '../formRules';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class LoginForm extends Component {
     }
 
     checkValid(fieldName) {
-        let errorMsg = validate({[fieldName]: this.state[fieldName]}, validationRules);
+        let errorMsg = validate({[fieldName]: this.state[fieldName]}, validationAuthRules);
         if (errorMsg[fieldName] && errorMsg[fieldName][0]) {
             this.setState({
                 [`${fieldName}Error`]: errorMsg[fieldName][0]

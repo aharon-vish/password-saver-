@@ -15,7 +15,7 @@ const RouterComponent = ()=> {
                        title="Registrar"/>
             </Scene>
             <Scene key="home" renderBackButton={()=>(null)} component={Home}/>
-            <Scene key="newPasswordForm" component={NewPasswordForm}/>
+            <Scene key="newPasswordForm" backTitle="Back" component={NewPasswordForm}/>
         </Router>
     );
 };

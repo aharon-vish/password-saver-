@@ -1,4 +1,4 @@
-const validationRules = {
+export const validationAuthRules = {
     email: {
         presence: {
             message: '^Please enter an email address'
@@ -19,4 +19,23 @@ const validationRules = {
         }
     }
 };
-export default validationRules;
+export const validationNewPasswordhRules = {
+    service: {
+        length: {
+            minimum: 1,
+            message: '^Your service must be at least 1 characters'
+        }
+    },
+    userName:{
+        length: {
+            minimum: 1,
+            message: '^Your user name must be at least 1 characters'
+        }
+    },
+    password: {
+        length: {
+            minimum: 1,
+            message: '^Your password must be at least 1 characters'
+        }
+    }
+};

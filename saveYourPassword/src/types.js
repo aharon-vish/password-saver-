@@ -1,3 +1,4 @@
 export const LOGIN_USER = 'LOGIN_USER';
 export const  LOGIN_USER_FAIL = 'LOGIN_USER_FAIL';
 export const REGISTRATION_USER = 'REGISTRATION_USER';
+export const ADD_NEW_PASSWORD = 'ADD_NEW_PASSWORD';

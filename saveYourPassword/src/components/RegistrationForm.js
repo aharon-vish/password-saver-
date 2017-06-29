@@ -5,7 +5,7 @@ import {Form, ValidateInput} from './common';
 import {Button} from 'react-native-elements';
 import{registrationUser} from '../actions';
 import validate from 'validate.js';
-import validationRules from '../formRules';
+import {validationAuthRules} from '../formRules';
 class RegistrationForm extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +14,7 @@ class RegistrationForm extends Component {
     }
 
     checkValid(fieldName) {
-        let errorMsg = validate({[fieldName]: this.state[fieldName]}, validationRules);
+        let errorMsg = validate({[fieldName]: this.state[fieldName]}, validationAuthRules);
         if (errorMsg[fieldName] && errorMsg[fieldName][0]) {
             this.setState({
                 [`${fieldName}Error`]: errorMsg[fieldName][0]
