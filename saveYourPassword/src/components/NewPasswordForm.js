@@ -3,13 +3,15 @@ import {View, Text, TextInput, TouchableOpacity}  from 'react-native';
 import {Form, ValidateInput} from './common';
 import {Button} from 'react-native-elements';
 import validate from 'validate.js';
+import {connect} from 'react-redux';
+import{addNewPassword} from '../actions';
 import {validationNewPasswordhRules} from '../formRules';
 
 class NewPasswordForm extends Component {
     constructor(props) {
         super(props);
         this.renderPasswordForm = this.renderPasswordForm.bind(this);
-        this.addNewPassword = this.addNewPassword.bind(this);
+        this.submit = this.submit.bind(this);
         this.state = {service: '', userName: '', password: '',userNameError:'',errors:{}};
     }
 
@@ -28,7 +30,7 @@ class NewPasswordForm extends Component {
         })
     }
 
-    addNewPassword() {
+    submit() {
         this.state.errors = validate(this.state, validationNewPasswordhRules);
         let hasErrors = false;
         this.state.errors && Object.keys(this.state.errors).map(function(key){
@@ -38,7 +40,7 @@ class NewPasswordForm extends Component {
         }.bind(this));
 
         if(!hasErrors){
-            console.log('now errros');
+           this.props.addNewPassword(this.state);
         }else {
             return this;
         }
@@ -49,7 +51,7 @@ class NewPasswordForm extends Component {
             <View>
                 {this.renderPasswordForm()}
                 <Button
-                    onPress={this.addNewPassword}
+                    onPress={this.submit}
                     title={`Add New Password`}
                     buttonStyle={{width: '100%', height: 60, marginTop:15}}
                     fontSize={20}
@@ -87,4 +89,9 @@ const formFields = [{
             error: 'passwordError'
         }
     }];
-export default NewPasswordForm ;
+
+const mapStateToProps = ({newPassword}) => {
+    const {service,userName,password} = newPassword;
+    return {service,userName,password};
+};
+export default connect(mapStateToProps, {addNewPassword})(NewPasswordForm) ;
