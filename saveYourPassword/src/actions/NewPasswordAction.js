@@ -13,7 +13,7 @@ export const addNewPassword = ({service,userName,password})=> {
                     'The record saved successfully',
                     user.message,
                     [
-                        {text: 'Cancel', style: 'cancel'},
+                        {text: 'Ok', style: 'Ok'}
                     ],
                     {cancelable: false}
                 );
@@ -24,7 +24,7 @@ export const addNewPassword = ({service,userName,password})=> {
                 'Record Not Saved',
                 user.message,
                 [
-                    {text: 'Cancel', style: 'cancel'},
+                    {text: 'Ok', style: 'Ok'}
                 ],
                 {cancelable: false}
             ));

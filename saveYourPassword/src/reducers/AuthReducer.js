@@ -15,9 +15,9 @@ const INITIAL_STATE = {email: '', password: '', user: null, error: '',loading:fa
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case LOGIN_USER:
-            return {...state, loading:true, error:''};
+            return {...state, user: action.payload};
         case LOGIN_USER_FAIL:
-            return {...state, error: 'Authentication Failed',loading:false,password:''};
+            return {...state,user:{},error: 'Authentication Failed',loading:false};
         case REGISTRATION_USER:
             return {...state,INITIAL_STATE,user: action.payload};
         default:

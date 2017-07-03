@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm';
 import RegistrationForm from './components/RegistrationForm';
 import Home from './components/Home';
 import NewPasswordForm from './components/NewPasswordForm';
+import requireAuth from './hoc/Auth-require';
 
 const RouterComponent = ()=> {
     return (
@@ -15,8 +16,8 @@ const RouterComponent = ()=> {
                        backTitle="Log In"
                        title="Registrar"/>
             </Scene>
-            <Scene key="home" renderBackButton={()=>(null)} component={Home}/>
-            <Scene key="newPasswordForm" backTitle="Back" component={NewPasswordForm}/>
+            <Scene key="home" renderBackButton={()=>(null)} component={requireAuth(Home)}/>
+            <Scene key="newPasswordForm" backTitle="Back" component={requireAuth(NewPasswordForm)}/>
         </Router>
     );
 };
