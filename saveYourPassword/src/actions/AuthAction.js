@@ -29,10 +29,9 @@ export const loginUser = (email, password)=> {
 };
 export const registrationUser = (email, password)=> {
     return (dispatch)=> {
-        dispatch({type: REGISTRATION_USER});
+        dispatch({type: LOGIN_USER,payload:{email, password}});
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(()=>{
-                dispatch({type: LOGIN_USER,payload:{email, password}});
                 Actions.home() })
             .catch((user)=>
                 Alert.alert(

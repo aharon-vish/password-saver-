@@ -35,6 +35,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
-//TODO 1.add HOC auth
-//TODO 2.add list of passwords
