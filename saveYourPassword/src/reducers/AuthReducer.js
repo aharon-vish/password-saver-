@@ -19,7 +19,7 @@ export default (state = INITIAL_STATE, action) => {
         case LOGIN_USER_FAIL:
             return {...state,user:{},error: 'Authentication Failed',loading:false};
         case REGISTRATION_USER:
-            return {...state,INITIAL_STATE,user: action.payload};
+            return {...state,user: action.payload};
         default:
             return state;
     }

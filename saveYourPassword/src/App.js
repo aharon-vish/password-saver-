@@ -6,6 +6,7 @@ import  ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import LoginForm from './components/LoginForm';
 import Router from './Router';
+import Async from './middlewares/async';
 class App extends Component {
 
     constructor(props) {
@@ -13,7 +14,7 @@ class App extends Component {
     }
 
     render() {
-        const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+        const store = createStore(reducers, {}, applyMiddleware(Async));
         return (
             <Provider store={store}>
                 <Router/>
