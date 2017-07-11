@@ -1,26 +1,59 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
-import firebase from 'firebase';
+import {ScrollView,
+    Text,
+    View,
+    StyleSheet,
+    TouchableOpacity} from 'react-native';
+import {Avatar} from 'react-native-elements';
+import randomColor from 'randomcolor';
 class PasswordList extends Component {
     constructor(props) {
         super(props);
-        console.log(0) ;
+        this.renderList = this.renderList.bind(this);
+        this.state = {listPasswordsArray: null};
+        this.expandPassword = this.expandPassword.bind(this);
     }
 
-    componentWillMount(){
-        const {currentUser} = firebase.auth();
-        firebase.database().ref(`/users/${currentUser.uid}/password`)
-            .on('value',snapshot => {
-                //dispatch({type: EMPLOYEES_FETCH_SUCCESS , payload:snapshot.val()})
-                console.log(snapshot.val());
-            });
+    expandPassword(key) {
+        console.log(key);
     }
+
+    renderList() {
+        if (this.props.passwordList !== null) {
+            return Object.keys(this.props.passwordList).map(key => {
+                return (
+                    <View style={{margin:20}} key={key}>
+                    <Avatar
+                        title={this.props.passwordList[key].service}
+                        avatarStyle={{fontSize:10}}
+                        key={key}
+                        rounded
+                        medium
+                        overlayContainerStyle={{backgroundColor: randomColor()}}
+                        onPress={this.expandPassword.bind(this,key)}
+                    />
+                </View>
+                )
+            });
+        } else {
+            return <View><Text>loading......</Text></View>;
+        }
+    }
+
     render() {
         return (
-            <View>
-                <Text>koko</Text>
-            </View>
+            <ScrollView style={{flex:1}}>
+                {this.renderList()}
+            </ScrollView>
         )
     }
 }
+var styles = StyleSheet.create({
+    container: {
+        height: 10,
+        borderColor: 'black',
+        borderWidth: 1,
+        margin: 10
+    }
+});
 export default PasswordList ;
