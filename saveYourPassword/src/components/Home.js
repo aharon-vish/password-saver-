@@ -32,7 +32,7 @@ class Home extends Component {
     render() {
         console.log(this.state);
         return (
-            <View style={{flex: 1}}>
+            <View style={{flex: 1,flexDirection: 'row'}}>
                 <PasswordList passwordList={this.state.passwordList}/>
                 <Icon
                     iconStyle={{}}

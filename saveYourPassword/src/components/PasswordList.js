@@ -22,17 +22,13 @@ class PasswordList extends Component {
         if (this.props.passwordList !== null) {
             return Object.keys(this.props.passwordList).map(key => {
                 return (
-                    <View style={{margin:20}} key={key}>
-                    <Avatar
-                        title={this.props.passwordList[key].service}
-                        avatarStyle={{fontSize:10}}
-                        key={key}
-                        rounded
-                        medium
-                        overlayContainerStyle={{backgroundColor: randomColor()}}
-                        onPress={this.expandPassword.bind(this,key)}
-                    />
-                </View>
+                    <TouchableOpacity onPress={()=>{debugger;}}>
+                    <View style={{margin:10,width: 100, height: 100,backgroundColor: randomColor()}} key={key}
+                          onPress={()=>{debugger;}}
+                          >
+                        <Text>{this.props.passwordList[key].service}</Text>
+                    </View>
+                        </TouchableOpacity>
                 )
             });
         } else {
@@ -42,8 +38,10 @@ class PasswordList extends Component {
 
     render() {
         return (
-            <ScrollView style={{flex:1}}>
-                {this.renderList()}
+            <ScrollView style={{flex: 1}}>
+                <View style={{flex: 1, flexDirection: 'row',flexWrap:'wrap'}}>
+                    {this.renderList()}
+                </View>
             </ScrollView>
         )
     }
@@ -56,4 +54,15 @@ var styles = StyleSheet.create({
         margin: 10
     }
 });
+
+
+//<Avatar
+//    title={this.props.passwordList[key].service}
+//    avatarStyle={{fontSize:10}}
+//    key={key}
+//    rounded
+//    medium
+//    overlayContainerStyle={{backgroundColor: randomColor()}}
+//    onPress={this.expandPassword.bind(this,key)}
+///>
 export default PasswordList ;
