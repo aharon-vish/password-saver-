@@ -11,7 +11,7 @@ class Form extends Component {
             inputValue:'',
             fadeAnim: new Animated.Value(0.5),
             topAnim: new Animated.Value(30),
-            leftAnim: new Animated.Value(20),
+            leftAnim: new Animated.Value(20)
         };
         this.startAnimated = this.startAnimated.bind(this);
         this.resetAnimated = this.resetAnimated.bind(this);
@@ -72,6 +72,7 @@ class Form extends Component {
                 </Animated.Text>
 
                 <FormInput
+                    inputStyle={{width:'auto'}}
                     onFocus={this.startAnimated}
                     secureTextEntry={secureTextEntry}
                     onBlur={() => {
