@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loginUser} from '../actions';
 import {Form, ValidateInput} from './common';
-import {View, Text, TextInput, TouchableOpacity}  from 'react-native';
+import {View, Text, TouchableOpacity,Image,TextInput}  from 'react-native';
 import {Button} from 'react-native-elements';
 import validate from 'validate.js';
 import {Actions} from 'react-native-router-flux';
 import {validationAuthRules}from '../formRules';
+import ImageView from '../ImageView';
+import TextInputi from '../TextInput';
+var resolveAssetSource = require('resolveAssetSource');
 
 class LoginForm extends Component {
     constructor(props) {
@@ -64,28 +67,13 @@ class LoginForm extends Component {
     }
 
     render() {
+        const img = require('../a.jpg');
+        const source = resolveAssetSource(img);
+        debugger;
         return (
             <View>
-                {this.renderLoginForm()}
-                <Button
-                    onPress={this.submit}
-                    title={`Log In`}
-                    buttonStyle={{width: '100%', height: 60}}
-                    fontSize={20}
-                    fontWeight={`200`}
-                    backgroundColor={`#a301bc`}/>
-                <TouchableOpacity
-                    onPress={Actions.registration}
-                    style={{marginTop: 15}}>
-                    <Text
-                        style={{
-                            textDecorationLine: 'underline',
-                            textAlign: 'center',
-                            color: '#4286f4'
-                        }}>
-                        {`Sing In`}
-                    </Text>
-                </TouchableOpacity>
+                <TextInput style={{height: 40,width: 400, borderColor: 'gray', borderWidth: 1}}/>
+                <TextInputi underlineColorAndroid={'blue'} style={{height: 40,width: 400, borderColor: 'gray', borderWidth: 1}}/>
             </View>
         );
     }

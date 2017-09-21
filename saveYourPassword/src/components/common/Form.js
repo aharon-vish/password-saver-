@@ -1,6 +1,8 @@
 import React, {Component}from 'react';
 import {View, Text, Animated, Easing} from 'react-native';
 import {FormLabel, FormInput, Button, FormValidationMessage} from 'react-native-elements';
+import { NativeModules } from 'react-native';
+ToastExample = NativeModules.ToastAndroid;
 
 class Form extends Component {
     constructor(props) {
@@ -16,6 +18,7 @@ class Form extends Component {
     }
 
     componentDidMount() {
+        ToastExample.show('Awesome', 3);
     }
 
     startAnimated() {
